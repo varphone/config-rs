@@ -31,7 +31,7 @@ pub struct File<T, F> {
     required: bool,
 }
 
-/// An extension of [`Format`](crate::Format) trait.
+/// An extension of [`Format`] trait.
 ///
 /// Associates format with file extensions, therefore linking storage-agnostic notion of format to a file system.
 pub trait FileStoredFormat: Format {
