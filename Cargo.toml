@@ -150,5 +150,9 @@ notify = "6.0"
 temp-env = "0.3"
 log = { version = "0.4", features = ["serde"] }
 
+[[example]]
+name = "async_source"
+required-features = ["json", "async"]
+
 [lints]
 workspace = true

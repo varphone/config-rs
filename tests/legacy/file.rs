@@ -23,6 +23,7 @@ fn test_file_required_not_found() {
 }
 
 #[test]
+#[cfg(feature = "toml")]
 fn test_file_auto() {
     let mut c = Config::default();
     c.merge(File::with_name("tests/Settings-production"))
@@ -45,6 +46,7 @@ fn test_file_auto_not_found() {
 }
 
 #[test]
+#[cfg(feature = "json")]
 fn test_file_ext() {
     let mut c = Config::default();
     c.merge(File::with_name("tests/Settings.json")).unwrap();

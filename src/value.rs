@@ -888,6 +888,7 @@ mod tests {
     use crate::FileFormat;
 
     #[test]
+    #[cfg(feature = "toml")]
     fn test_i64() {
         let c = Config::builder()
             .add_source(File::new("tests/types/i64.toml", FileFormat::Toml))

@@ -522,6 +522,7 @@ fn test_parse_string_and_list_ignore_list_parse_key_case() {
 }
 
 #[test]
+#[cfg(feature = "convert-case")]
 fn test_parse_nested_kebab() {
     use config::Case;
 

@@ -1,3 +1,5 @@
+#![cfg(feature = "ron")]
+
 use config::{Config, File, FileFormat};
 use serde_derive::Deserialize;
 

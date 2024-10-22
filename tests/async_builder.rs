@@ -1,3 +1,7 @@
+#![cfg(feature = "async")]
+#![cfg(feature = "json")]
+#![cfg(feature = "toml")]
+
 use async_trait::async_trait;
 use config::{AsyncSource, Config, ConfigError, FileFormat, Format, Map, Value};
 use std::{env, fs, path, str::FromStr};

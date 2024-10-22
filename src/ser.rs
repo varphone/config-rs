@@ -679,6 +679,8 @@ impl ser::SerializeStructVariant for Unreachable {
 mod test {
     use super::*;
     use serde::{Deserialize, Serialize};
+    #[cfg(not(feature = "json5"))]
+    use serde_derive::{Deserialize, Serialize};
 
     #[test]
     fn test_struct() {
@@ -699,6 +701,7 @@ mod test {
     }
 
     #[test]
+    #[cfg(feature = "json")]
     fn test_nest() {
         let val = serde_json::json! { {
             "top": {

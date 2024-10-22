@@ -2,7 +2,7 @@ use config::{Config, File, FileStoredFormat, Format, Map, Value, ValueKind};
 use std::io::{Error, ErrorKind};
 
 /// The private and public key sources will be read into their associated variable:
-#[derive(serde::Deserialize, Clone, Debug)]
+#[derive(serde_derive::Deserialize, Clone, Debug)]
 pub struct Settings {
     pub private_key: Option<String>,
     pub public_key: Option<String>,

@@ -4,6 +4,9 @@
 // Please don't be offended!
 //
 
+#![cfg(feature = "json")]
+#![cfg(feature = "toml")]
+
 use serde_derive::{Deserialize, Serialize};
 
 use config::{File, FileFormat};
