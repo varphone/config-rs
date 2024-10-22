@@ -238,6 +238,7 @@ fn test_parse_off_int() {
     #[derive(Deserialize, Debug)]
     #[serde(tag = "tag")]
     enum TestIntEnum {
+        #[allow(dead_code)]
         Int(TestInt),
     }
 
@@ -268,6 +269,7 @@ fn test_parse_off_float() {
     #[derive(Deserialize, Debug)]
     #[serde(tag = "tag")]
     enum TestFloatEnum {
+        #[allow(dead_code)]
         Float(TestFloat),
     }
 
@@ -298,6 +300,7 @@ fn test_parse_off_bool() {
     #[derive(Deserialize, Debug)]
     #[serde(tag = "tag")]
     enum TestBoolEnum {
+        #[allow(dead_code)]
         Bool(TestBool),
     }
 
@@ -328,6 +331,7 @@ fn test_parse_int_fail() {
     #[derive(Deserialize, Debug)]
     #[serde(tag = "tag")]
     enum TestIntEnum {
+        #[allow(dead_code)]
         Int(TestInt),
     }
 
@@ -358,6 +362,7 @@ fn test_parse_float_fail() {
     #[derive(Deserialize, Debug)]
     #[serde(tag = "tag")]
     enum TestFloatEnum {
+        #[allow(dead_code)]
         Float(TestFloat),
     }
 
@@ -388,6 +393,7 @@ fn test_parse_bool_fail() {
     #[derive(Deserialize, Debug)]
     #[serde(tag = "tag")]
     enum TestBoolEnum {
+        #[allow(dead_code)]
         Bool(TestBool),
     }
 
