@@ -25,7 +25,7 @@ fn sindex_to_uindex(index: isize, len: usize) -> usize {
     if index >= 0 {
         index as usize
     } else {
-        len - (index.abs() as usize)
+        len - index.unsigned_abs()
     }
 }
 

@@ -126,11 +126,11 @@ impl<'a> ser::Serializer for &'a mut ConfigSerializer {
     }
 
     fn serialize_u64(self, v: u64) -> Result<Self::Ok> {
-        if v > (i64::max_value() as u64) {
+        if v > (i64::MAX as u64) {
             Err(ConfigError::Message(format!(
                 "value {} is greater than the max {}",
                 v,
-                i64::max_value()
+                i64::MAX
             )))
         } else {
             self.serialize_i64(v as i64)
