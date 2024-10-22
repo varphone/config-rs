@@ -7,7 +7,7 @@ repos:
     - id: check-case-conflict
       stages: [commit]
   - repo: https://github.com/crate-ci/typos
-    rev: v1.16.20
+    rev: v1.26.0
     hooks:
     - id: typos
       stages: [commit]
