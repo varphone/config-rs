@@ -193,7 +193,7 @@ pub struct Value {
     ///
     /// A Value originating from the environment would contain:
     /// ```text
-    /// the envrionment
+    /// the environment
     /// ```
     ///
     /// A Value originating from a remote source might contain:
