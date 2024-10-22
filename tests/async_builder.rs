@@ -11,7 +11,7 @@ struct AsyncFile {
 
 /// This is a test only implementation to be used in tests
 impl AsyncFile {
-    pub fn new(path: String, format: FileFormat) -> Self {
+    pub(crate) fn new(path: String, format: FileFormat) -> Self {
         Self { path, format }
     }
 }

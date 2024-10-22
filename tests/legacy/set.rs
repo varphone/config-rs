@@ -50,16 +50,13 @@ fn test_set_arr_path() {
 
     c.set("items[0].name", "Ivan").unwrap();
 
-    assert_eq!(c.get("items[0].name").ok(), Some("Ivan".to_string()));
+    assert_eq!(c.get("items[0].name").ok(), Some("Ivan".to_owned()));
 
     c.set("data[0].things[1].name", "foo").unwrap();
     c.set("data[0].things[1].value", 42).unwrap();
     c.set("data[1]", 0).unwrap();
 
-    assert_eq!(
-        c.get("data[0].things[1].name").ok(),
-        Some("foo".to_string())
-    );
+    assert_eq!(c.get("data[0].things[1].name").ok(), Some("foo".to_owned()));
     assert_eq!(c.get("data[0].things[1].value").ok(), Some(42));
     assert_eq!(c.get("data[1]").ok(), Some(0));
 
@@ -68,11 +65,11 @@ fn test_set_arr_path() {
 
     c.set("items[0].name", "John").unwrap();
 
-    assert_eq!(c.get("items[0].name").ok(), Some("John".to_string()));
+    assert_eq!(c.get("items[0].name").ok(), Some("John".to_owned()));
 
     c.set("items[2]", "George").unwrap();
 
-    assert_eq!(c.get("items[2]").ok(), Some("George".to_string()));
+    assert_eq!(c.get("items[2]").ok(), Some("George".to_owned()));
 }
 
 #[cfg(feature = "toml")]

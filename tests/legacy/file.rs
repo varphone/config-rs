@@ -18,7 +18,7 @@ fn test_file_required_not_found() {
     assert!(res.is_err());
     assert_eq!(
         res.unwrap_err().to_string(),
-        "configuration file \"tests/NoSettings\" not found".to_string()
+        "configuration file \"tests/NoSettings\" not found".to_owned()
     );
 }
 
@@ -40,7 +40,7 @@ fn test_file_auto_not_found() {
     assert!(res.is_err());
     assert_eq!(
         res.unwrap_err().to_string(),
-        "configuration file \"tests/NoSettings\" not found".to_string()
+        "configuration file \"tests/NoSettings\" not found".to_owned()
     );
 }
 

@@ -1,7 +1,5 @@
 #![cfg(feature = "preserve_order")]
 
-extern crate indexmap;
-
 #[derive(serde::Deserialize, Eq, PartialEq, Debug)]
 struct Container<T> {
     inner: T,
@@ -22,7 +20,7 @@ impl From<Unsigned> for config::ValueKind {
     fn from(unsigned: Unsigned) -> Self {
         let mut properties = indexmap::IndexMap::new();
         properties.insert(
-            "unsigned".to_string(),
+            "unsigned".to_owned(),
             config::Value::from(unsigned.unsigned),
         );
 

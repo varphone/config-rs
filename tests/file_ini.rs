@@ -101,14 +101,14 @@ fn test_override_uppercase_value_for_struct() {
             assert_ne!(v.FOO, "FOO should be overridden");
             assert_eq!(
                 lower_settings.foo,
-                "I HAVE BEEN OVERRIDDEN_WITH_UPPER_CASE".to_string()
+                "I HAVE BEEN OVERRIDDEN_WITH_UPPER_CASE".to_owned()
             );
         }
         Err(e) => {
             if e.to_string().contains("missing field `FOO`") {
                 assert_eq!(
                     lower_settings.foo,
-                    "I HAVE BEEN OVERRIDDEN_WITH_UPPER_CASE".to_string()
+                    "I HAVE BEEN OVERRIDDEN_WITH_UPPER_CASE".to_owned()
                 );
             } else {
                 panic!("{}", e);
@@ -130,9 +130,9 @@ fn test_override_lowercase_value_for_struct() {
     let values: StructSettings = cfg.try_deserialize().unwrap();
     assert_eq!(
         values.foo,
-        "I have been overridden_with_lower_case".to_string()
+        "I have been overridden_with_lower_case".to_owned()
     );
-    assert_ne!(values.foo, "I am bar".to_string());
+    assert_ne!(values.foo, "I am bar".to_owned());
 }
 
 #[test]
@@ -148,7 +148,7 @@ fn test_override_uppercase_value_for_enums() {
 
     assert_eq!(
         val,
-        EnumSettings::Bar("I HAVE BEEN OVERRIDDEN_WITH_UPPER_CASE".to_string())
+        EnumSettings::Bar("I HAVE BEEN OVERRIDDEN_WITH_UPPER_CASE".to_owned())
     );
 }
 
@@ -166,6 +166,6 @@ fn test_override_lowercase_value_for_enums() {
 
     assert_eq!(
         param,
-        EnumSettings::Bar("I have been overridden_with_lower_case".to_string())
+        EnumSettings::Bar("I have been overridden_with_lower_case".to_owned())
     );
 }

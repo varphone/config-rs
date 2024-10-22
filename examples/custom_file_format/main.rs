@@ -23,7 +23,7 @@ fn main() {
 
     // Deserialize the config object into your Settings struct:
     let settings: Settings = settings.try_deserialize().unwrap();
-    println!("{:#?}", settings);
+    println!("{settings:#?}");
 }
 
 #[derive(Debug, Clone)]
@@ -34,7 +34,7 @@ impl Format for PemFile {
         &self,
         uri: Option<&String>,
         text: &str,
-    ) -> Result<Map<String, config::Value>, Box<dyn std::error::Error + Send + Sync>> {
+    ) -> Result<Map<String, Value>, Box<dyn std::error::Error + Send + Sync>> {
         // Store any valid keys into this map, they'll be merged with other sources into the final config map:
         let mut result = Map::new();
 

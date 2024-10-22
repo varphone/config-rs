@@ -269,7 +269,7 @@ struct EnumAccess {
 }
 
 impl EnumAccess {
-    fn variant_deserializer(&self, name: &str) -> Result<StrDeserializer> {
+    fn variant_deserializer(&self, name: &str) -> Result<StrDeserializer<'_>> {
         self.variants
             .iter()
             .find(|&&s| s.to_lowercase() == name.to_lowercase()) // changing to lowercase will enable deserialization of lowercase values to enums
@@ -277,7 +277,7 @@ impl EnumAccess {
             .ok_or_else(|| self.no_constructor_error(name))
     }
 
-    fn table_deserializer(&self, table: &Table) -> Result<StrDeserializer> {
+    fn table_deserializer(&self, table: &Table) -> Result<StrDeserializer<'_>> {
         if table.len() == 1 {
             self.variant_deserializer(table.iter().next().unwrap().0)
         } else {

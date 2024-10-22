@@ -7,7 +7,7 @@ use crate::value::{Value, ValueKind};
 mod parser;
 
 #[derive(Debug, Eq, PartialEq, Clone, Hash)]
-pub enum Expression {
+pub(crate) enum Expression {
     Identifier(String),
     Child(Box<Self>, String),
     Subscript(Box<Self>, isize),
@@ -30,7 +30,7 @@ fn sindex_to_uindex(index: isize, len: usize) -> usize {
 }
 
 impl Expression {
-    pub fn get(self, root: &Value) -> Option<&Value> {
+    pub(crate) fn get(self, root: &Value) -> Option<&Value> {
         match self {
             Self::Identifier(id) => {
                 match root.kind {
@@ -78,7 +78,7 @@ impl Expression {
         }
     }
 
-    pub fn get_mut<'a>(&self, root: &'a mut Value) -> Option<&'a mut Value> {
+    pub(crate) fn get_mut<'a>(&self, root: &'a mut Value) -> Option<&'a mut Value> {
         match *self {
             Self::Identifier(ref id) => match root.kind {
                 ValueKind::Table(ref mut map) => map.get_mut(id),
@@ -116,7 +116,7 @@ impl Expression {
         }
     }
 
-    pub fn get_mut_forcibly<'a>(&self, root: &'a mut Value) -> Option<&'a mut Value> {
+    pub(crate) fn get_mut_forcibly<'a>(&self, root: &'a mut Value) -> Option<&'a mut Value> {
         match *self {
             Self::Identifier(ref id) => match root.kind {
                 ValueKind::Table(ref mut map) => Some(
@@ -177,7 +177,7 @@ impl Expression {
         }
     }
 
-    pub fn set(&self, root: &mut Value, value: Value) {
+    pub(crate) fn set(&self, root: &mut Value, value: Value) {
         match *self {
             Self::Identifier(ref id) => {
                 // Ensure that root is a table
@@ -231,7 +231,7 @@ impl Expression {
             Self::Subscript(ref expr, index) => {
                 if let Some(parent) = expr.get_mut_forcibly(root) {
                     if !matches!(parent.kind, ValueKind::Array(_)) {
-                        *parent = Vec::<Value>::new().into()
+                        *parent = Vec::<Value>::new().into();
                     }
 
                     if let ValueKind::Array(ref mut array) = parent.kind {

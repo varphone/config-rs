@@ -20,7 +20,7 @@ enum SerKey {
 }
 
 /// An uninhabited type: no values like this can ever exist!
-pub enum Unreachable {}
+pub(crate) enum Unreachable {}
 
 /// Serializer for numbered sequences
 ///
@@ -55,17 +55,13 @@ impl ConfigSerializer {
 
         let mut whole = match keys.next() {
             Some(SerKey::Named(s)) => s.clone(),
-            _ => {
-                return Err(ConfigError::Message(
-                    "top level is not a struct".to_string(),
-                ))
-            }
+            _ => return Err(ConfigError::Message("top level is not a struct".to_owned())),
         };
 
         for k in keys {
             match k {
-                SerKey::Named(s) => write!(whole, ".{}", s),
-                SerKey::Seq(i) => write!(whole, "[{}]", i),
+                SerKey::Named(s) => write!(whole, ".{s}"),
+                SerKey::Seq(i) => write!(whole, "[{i}]"),
             }
             .expect("write! to a string failed");
         }
@@ -74,7 +70,7 @@ impl ConfigSerializer {
     }
 
     fn push_key(&mut self, key: &str) {
-        self.keys.push(SerKey::Named(key.to_string()));
+        self.keys.push(SerKey::Named(key.to_owned()));
     }
 
     fn pop_key(&mut self) {
@@ -150,7 +146,7 @@ impl<'a> ser::Serializer for &'a mut ConfigSerializer {
     }
 
     fn serialize_str(self, v: &str) -> Result<Self::Ok> {
-        self.serialize_primitive(v.to_string())
+        self.serialize_primitive(v.to_owned())
     }
 
     fn serialize_bytes(self, v: &[u8]) -> Result<Self::Ok> {
@@ -288,7 +284,7 @@ impl<'a> ser::SerializeSeq for SeqSerializer<'a> {
             Some(SerKey::Seq(i)) => *i += 1,
             _ => {
                 return Err(ConfigError::Message(
-                    "config-rs internal error (ser._element but last not Seq!".to_string(),
+                    "config-rs internal error (ser._element but last not Seq!".to_owned(),
                 ))
             }
         };
@@ -418,11 +414,12 @@ impl<'a> ser::SerializeStructVariant for &'a mut ConfigSerializer {
     }
 }
 
-pub struct StringKeySerializer;
+pub(crate) struct StringKeySerializer;
 
 /// Define `$emthod`, `serialize_foo`, taking `$type` and serialising it via [`Display`]
 macro_rules! string_serialize_via_display { { $method:ident, $type:ty } => {
     fn $method(self, v: $type) -> Result<Self::Ok> {
+        #[allow(clippy::str_to_string)]
         Ok(v.to_string())
     }
 } }
@@ -481,7 +478,7 @@ impl ser::Serializer for StringKeySerializer {
         _variant_index: u32,
         variant: &str,
     ) -> Result<Self::Ok> {
-        Ok(variant.to_string())
+        Ok(variant.to_owned())
     }
 
     fn serialize_newtype_struct<T>(self, _name: &str, value: &T) -> Result<Self::Ok>
@@ -506,20 +503,19 @@ impl ser::Serializer for StringKeySerializer {
 
     fn serialize_seq(self, _len: Option<usize>) -> Result<Self::SerializeSeq> {
         Err(ConfigError::Message(
-            "seq can't serialize to string key".to_string(),
+            "seq can't serialize to string key".to_owned(),
         ))
     }
 
     fn serialize_tuple(self, _len: usize) -> Result<Self::SerializeTuple> {
         Err(ConfigError::Message(
-            "tuple can't serialize to string key".to_string(),
+            "tuple can't serialize to string key".to_owned(),
         ))
     }
 
     fn serialize_tuple_struct(self, name: &str, _len: usize) -> Result<Self::SerializeTupleStruct> {
         Err(ConfigError::Message(format!(
-            "tuple struct {} can't serialize to string key",
-            name
+            "tuple struct {name} can't serialize to string key"
         )))
     }
 
@@ -531,21 +527,19 @@ impl ser::Serializer for StringKeySerializer {
         _len: usize,
     ) -> Result<Self::SerializeTupleVariant> {
         Err(ConfigError::Message(format!(
-            "tuple variant {}::{} can't serialize to string key",
-            name, variant
+            "tuple variant {name}::{variant} can't serialize to string key"
         )))
     }
 
     fn serialize_map(self, _len: Option<usize>) -> Result<Self::SerializeMap> {
         Err(ConfigError::Message(
-            "map can't serialize to string key".to_string(),
+            "map can't serialize to string key".to_owned(),
         ))
     }
 
     fn serialize_struct(self, name: &str, _len: usize) -> Result<Self::SerializeStruct> {
         Err(ConfigError::Message(format!(
-            "struct {} can't serialize to string key",
-            name
+            "struct {name} can't serialize to string key"
         )))
     }
 
@@ -557,8 +551,7 @@ impl ser::Serializer for StringKeySerializer {
         _len: usize,
     ) -> Result<Self::SerializeStructVariant> {
         Err(ConfigError::Message(format!(
-            "struct variant {}::{} can't serialize to string key",
-            name, variant
+            "struct variant {name}::{variant} can't serialize to string key"
         )))
     }
 }
@@ -697,7 +690,7 @@ mod test {
 
         let test = Test {
             int: 1,
-            seq: vec!["a".to_string(), "b".to_string()],
+            seq: vec!["a".to_owned(), "b".to_owned()],
         };
         let config = Config::try_from(&test).unwrap();
 

@@ -51,7 +51,7 @@ fn test_file() {
     let s: Settings = c.try_deserialize().unwrap();
 
     assert!(s.debug.approx_eq_ulps(&1.0, 2));
-    assert_eq!(s.production, Some("false".to_string()));
+    assert_eq!(s.production, Some("false".to_owned()));
     assert_eq!(s.code, AsciiCode(53));
     assert_eq!(s.place.number, PlaceNumber(1));
     assert_eq!(s.place.name, "Torre di Pisa");
@@ -62,15 +62,15 @@ fn test_file() {
     assert_eq!(s.place.rating, Some(4.5));
     assert_eq!(s.place.telephone, None);
     assert_eq!(s.elements.len(), 10);
-    assert_eq!(s.elements[3], "4".to_string());
+    assert_eq!(s.elements[3], "4".to_owned());
     if cfg!(feature = "preserve_order") {
         assert_eq!(
             s.place
                 .creator
                 .into_iter()
-                .collect::<Vec<(String, config::Value)>>(),
+                .collect::<Vec<(String, Value)>>(),
             vec![
-                ("name".to_string(), "John Smith".into()),
+                ("name".to_owned(), "John Smith".into()),
                 ("username".into(), "jsmith".into()),
                 ("email".into(), "jsmith@localhost".into()),
             ]
@@ -78,7 +78,7 @@ fn test_file() {
     } else {
         assert_eq!(
             s.place.creator["name"].clone().into_string().unwrap(),
-            "John Smith".to_string()
+            "John Smith".to_owned()
         );
     }
 }

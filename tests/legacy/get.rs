@@ -40,7 +40,7 @@ fn test_not_found() {
     assert!(res.is_err());
     assert_eq!(
         res.unwrap_err().to_string(),
-        "configuration property \"not_found\" not found".to_string()
+        "configuration property \"not_found\" not found".to_owned()
     );
 }
 
@@ -57,22 +57,22 @@ fn test_scalar_type_loose() {
     let c = make();
 
     assert_eq!(c.get("debug").ok(), Some(true));
-    assert_eq!(c.get("debug").ok(), Some("true".to_string()));
+    assert_eq!(c.get("debug").ok(), Some("true".to_owned()));
     assert_eq!(c.get("debug").ok(), Some(1));
     assert_eq!(c.get("debug").ok(), Some(1.0));
 
     assert_eq!(c.get("debug_s").ok(), Some(true));
-    assert_eq!(c.get("debug_s").ok(), Some("true".to_string()));
+    assert_eq!(c.get("debug_s").ok(), Some("true".to_owned()));
     assert_eq!(c.get("debug_s").ok(), Some(1));
     assert_eq!(c.get("debug_s").ok(), Some(1.0));
 
     assert_eq!(c.get("production").ok(), Some(false));
-    assert_eq!(c.get("production").ok(), Some("false".to_string()));
+    assert_eq!(c.get("production").ok(), Some("false".to_owned()));
     assert_eq!(c.get("production").ok(), Some(0));
     assert_eq!(c.get("production").ok(), Some(0.0));
 
     assert_eq!(c.get("production_s").ok(), Some(false));
-    assert_eq!(c.get("production_s").ok(), Some("false".to_string()));
+    assert_eq!(c.get("production_s").ok(), Some("false".to_owned()));
     assert_eq!(c.get("production_s").ok(), Some(0));
     assert_eq!(c.get("production_s").ok(), Some(0.0));
 }
@@ -84,7 +84,7 @@ fn test_get_scalar_path() {
     assert_eq!(c.get("place.favorite").ok(), Some(false));
     assert_eq!(
         c.get("place.creator.name").ok(),
-        Some("John Smith".to_string())
+        Some("John Smith".to_owned())
     );
 }
 
@@ -93,10 +93,10 @@ fn test_get_scalar_path_subscript() {
     let c = make();
 
     assert_eq!(c.get("arr[2]").ok(), Some(3));
-    assert_eq!(c.get("items[0].name").ok(), Some("1".to_string()));
-    assert_eq!(c.get("items[1].name").ok(), Some("2".to_string()));
-    assert_eq!(c.get("items[-1].name").ok(), Some("2".to_string()));
-    assert_eq!(c.get("items[-2].name").ok(), Some("1".to_string()));
+    assert_eq!(c.get("items[0].name").ok(), Some("1".to_owned()));
+    assert_eq!(c.get("items[1].name").ok(), Some("2".to_owned()));
+    assert_eq!(c.get("items[-1].name").ok(), Some("2".to_owned()));
+    assert_eq!(c.get("items[-2].name").ok(), Some("1".to_owned()));
 }
 
 #[test]
@@ -107,7 +107,7 @@ fn test_map() {
     assert_eq!(m.len(), 8);
     assert_eq!(
         m["name"].clone().into_string().unwrap(),
-        "Torre di Pisa".to_string()
+        "Torre di Pisa".to_owned()
     );
     assert_eq!(m["reviews"].clone().into_int().unwrap(), 3866);
 }
@@ -121,14 +121,14 @@ fn test_map_str() {
         assert_eq!(
             m.into_iter().collect::<Vec<(String, String)>>(),
             vec![
-                ("name".to_string(), "John Smith".to_string()),
-                ("username".to_string(), "jsmith".to_string()),
-                ("email".to_string(), "jsmith@localhost".to_string()),
+                ("name".to_owned(), "John Smith".to_owned()),
+                ("username".to_owned(), "jsmith".to_owned()),
+                ("email".to_owned(), "jsmith@localhost".to_owned()),
             ]
         );
     } else {
         assert_eq!(m.len(), 3);
-        assert_eq!(m["name"], "John Smith".to_string());
+        assert_eq!(m["name"], "John Smith".to_owned());
     }
 }
 
@@ -145,7 +145,7 @@ fn test_map_struct() {
     assert_eq!(s.place.len(), 8);
     assert_eq!(
         s.place["name"].clone().into_string().unwrap(),
-        "Torre di Pisa".to_string()
+        "Torre di Pisa".to_owned()
     );
     assert_eq!(s.place["reviews"].clone().into_int().unwrap(), 3866);
 }
@@ -158,7 +158,7 @@ fn test_file_struct() {
     let s: Settings = c.try_deserialize().unwrap();
 
     assert!(s.debug.approx_eq_ulps(&1.0, 2));
-    assert_eq!(s.production, Some("false".to_string()));
+    assert_eq!(s.production, Some("false".to_owned()));
     assert_eq!(s.place.name, "Torre di Pisa");
     assert!(s.place.longitude.approx_eq_ulps(&43.722_498_5, 2));
     assert!(s.place.latitude.approx_eq_ulps(&10.397_052_2, 2));
@@ -206,7 +206,7 @@ fn test_struct_array() {
     let s: Settings = c.try_deserialize().unwrap();
 
     assert_eq!(s.elements.len(), 10);
-    assert_eq!(s.elements[3], "4".to_string());
+    assert_eq!(s.elements[3], "4".to_owned());
 }
 
 #[test]

@@ -29,22 +29,22 @@ mod json5;
 
 /// File formats provided by the library.
 ///
-/// Although it is possible to define custom formats using [`Format`] trait it is recommended to use FileFormat if possible.
+/// Although it is possible to define custom formats using [`Format`] trait it is recommended to use `FileFormat` if possible.
 #[derive(Debug, Clone, Copy, Eq, PartialEq, Hash)]
 pub enum FileFormat {
     /// TOML (parsed with toml)
     #[cfg(feature = "toml")]
     Toml,
 
-    /// JSON (parsed with serde_json)
+    /// JSON (parsed with `serde_json`)
     #[cfg(feature = "json")]
     Json,
 
-    /// YAML (parsed with yaml_rust2)
+    /// YAML (parsed with `yaml_rust2`)
     #[cfg(feature = "yaml")]
     Yaml,
 
-    /// INI (parsed with rust_ini)
+    /// INI (parsed with `rust_ini`)
     #[cfg(feature = "ini")]
     Ini,
 

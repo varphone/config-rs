@@ -28,7 +28,7 @@ fn show() {
     );
 }
 
-fn watch() {
+fn watch() -> ! {
     // Create a channel to receive the events.
     let (tx, rx) = channel();
 
@@ -62,7 +62,7 @@ fn watch() {
                 show();
             }
 
-            Err(e) => println!("watch error: {:?}", e),
+            Err(e) => println!("watch error: {e:?}"),
 
             _ => {
                 // Ignore event
