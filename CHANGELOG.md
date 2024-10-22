@@ -4,7 +4,8 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## Unreleased
+<!-- next-header -->
+## [Unreleased] - ReleaseDate
 
 ## 0.14.0 - 2024-02-01
 
@@ -470,3 +471,6 @@ update its MSRV.
 
 ## 0.2.0 - 2017-01-29
 Initial release.
+
+<!-- next-url -->
+[Unreleased]: https://github.com/rust-cli/config-rs/compare/0.14.0...HEAD
