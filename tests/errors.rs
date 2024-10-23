@@ -45,6 +45,7 @@ fn test_error_type() {
 }
 
 #[test]
+#[cfg(unix)]
 fn test_error_deser_whole() {
     #[derive(Deserialize, Debug)]
     struct Place {

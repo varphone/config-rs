@@ -75,6 +75,7 @@ fn test_file() {
 }
 
 #[test]
+#[cfg(unix)]
 fn test_error_parse() {
     let mut c = Config::default();
     let res = c.merge(File::new("tests/Settings-invalid", FileFormat::Yaml));

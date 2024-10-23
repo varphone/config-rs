@@ -74,6 +74,7 @@ fn test_file() {
 }
 
 #[test]
+#[cfg(unix)]
 fn test_error_parse() {
     let res = Config::builder()
         .add_source(File::new("tests/Settings-invalid", FileFormat::Yaml))
