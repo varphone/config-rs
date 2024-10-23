@@ -1,3 +1,5 @@
+#![cfg(feature = "toml")]
+
 use config::Config;
 
 #[test]

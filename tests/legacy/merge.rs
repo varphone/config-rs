@@ -26,15 +26,15 @@ fn test_merge() {
         assert_eq!(
             m.into_iter().collect::<Vec<(String, String)>>(),
             vec![
-                ("name".to_string(), "Somebody New".to_string()),
-                ("username".to_string(), "jsmith".to_string()),
-                ("email".to_string(), "jsmith@localhost".to_string()),
+                ("name".to_owned(), "Somebody New".to_owned()),
+                ("username".to_owned(), "jsmith".to_owned()),
+                ("email".to_owned(), "jsmith@localhost".to_owned()),
             ]
         );
     } else {
         assert_eq!(
             c.get("place.creator.name").ok(),
-            Some("Somebody New".to_string())
+            Some("Somebody New".to_owned())
         );
     }
 }

@@ -34,12 +34,12 @@ pub struct Environment {
 
     /// Optional directive to translate collected keys into a form that matches what serializers
     /// that the configuration would expect. For example if you have the `kebab-case` attribute
-    /// for your serde config types, you may want to pass Case::Kebab here.
+    /// for your serde config types, you may want to pass `Case::Kebab` here.
     #[cfg(feature = "convert-case")]
-    convert_case: Option<convert_case::Case>,
+    convert_case: Option<Case>,
 
-    /// Optional character sequence that separates each env value into a vector. only works when try_parsing is set to true
-    /// Once set, you cannot have type String on the same environment, unless you set list_parse_keys.
+    /// Optional character sequence that separates each env value into a vector. only works when `try_parsing` is set to true
+    /// Once set, you cannot have type String on the same environment, unless you set `list_parse_keys`.
     list_separator: Option<String>,
     /// A list of keys which should always be parsed as a list. If not set you can have only `Vec<String>` or `String` (not both) in one environment.
     list_parse_keys: Option<Vec<String>>,
@@ -110,7 +110,7 @@ impl Environment {
         }
     }
 
-    /// See [Environment::with_prefix]
+    /// See [`Environment::with_prefix`]
     pub fn prefix(mut self, s: &str) -> Self {
         self.prefix = Some(s.into());
         self
@@ -141,7 +141,7 @@ impl Environment {
         self
     }
 
-    /// When set and try_parsing is true, then all environment variables will be parsed as [`Vec<String>`] instead of [`String`].
+    /// When set and `try_parsing` is true, then all environment variables will be parsed as [`Vec<String>`] instead of [`String`].
     /// See
     /// [`with_list_parse_key`](Self::with_list_parse_key)
     /// when you want to use [`Vec<String>`] in combination with [`String`].
@@ -151,11 +151,11 @@ impl Environment {
     }
 
     /// Add a key which should be parsed as a list when collecting [`Value`]s from the environment.
-    /// Once list_separator is set, the type for string is [`Vec<String>`].
+    /// Once `list_separator` is set, the type for string is [`Vec<String>`].
     /// To switch the default type back to type Strings you need to provide the keys which should be [`Vec<String>`] using this function.
     pub fn with_list_parse_key(mut self, key: &str) -> Self {
         if self.list_parse_keys.is_none() {
-            self.list_parse_keys = Some(vec![key.to_lowercase()])
+            self.list_parse_keys = Some(vec![key.to_lowercase()]);
         } else {
             self.list_parse_keys = self.list_parse_keys.map(|mut keys| {
                 keys.push(key.to_lowercase());
@@ -246,7 +246,7 @@ impl Source for Environment {
         let prefix_pattern = self
             .prefix
             .as_ref()
-            .map(|prefix| format!("{}{}", prefix, prefix_separator).to_lowercase());
+            .map(|prefix| format!("{prefix}{prefix_separator}").to_lowercase());
 
         let collector = |(key, value): (String, String)| {
             // Treat empty environment variables as unset
@@ -295,7 +295,7 @@ impl Source for Environment {
                         if keys.contains(&key) {
                             let v: Vec<Value> = value
                                 .split(separator)
-                                .map(|s| Value::new(Some(&uri), ValueKind::String(s.to_string())))
+                                .map(|s| Value::new(Some(&uri), ValueKind::String(s.to_owned())))
                                 .collect();
                             ValueKind::Array(v)
                         } else {
@@ -304,7 +304,7 @@ impl Source for Environment {
                     } else {
                         let v: Vec<Value> = value
                             .split(separator)
-                            .map(|s| Value::new(Some(&uri), ValueKind::String(s.to_string())))
+                            .map(|s| Value::new(Some(&uri), ValueKind::String(s.to_owned())))
                             .collect();
                         ValueKind::Array(v)
                     }

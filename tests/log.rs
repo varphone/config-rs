@@ -1,9 +1,7 @@
-extern crate config;
-extern crate log;
+#![cfg(feature = "json")]
 
 #[macro_use]
 extern crate serde_derive;
-extern crate serde_json;
 
 use config::*;
 
@@ -37,6 +35,7 @@ fn test_case_sensitivity_log_level_from_str() {
 }
 
 #[test]
+#[cfg(feature = "json")]
 fn test_case_sensitivity_json_from_str() {
     // to confirm serde_json works as expected
     let s = r#"{ "log": "error" }"#;

@@ -45,6 +45,7 @@ fn test_error_type() {
 }
 
 #[test]
+#[cfg(unix)]
 fn test_error_deser_whole() {
     #[derive(Deserialize, Debug)]
     struct Place {
@@ -76,7 +77,7 @@ fn test_error_type_detached() {
     assert!(res.is_err());
     assert_eq!(
         res.unwrap_err().to_string(),
-        "invalid type: string \"fals\", expected a boolean".to_string()
+        "invalid type: string \"fals\", expected a boolean".to_owned()
     );
 }
 
@@ -148,7 +149,7 @@ fn test_error_enum_de() {
     let on_d = on_v.try_deserialize::<Diode>();
     assert_eq!(
         on_d.unwrap_err().to_string(),
-        "enum Diode does not have variant constructor on".to_string()
+        "enum Diode does not have variant constructor on".to_owned()
     );
 
     let array_v: Value = vec![100, 100].into();
@@ -159,8 +160,8 @@ fn test_error_enum_de() {
     );
 
     let confused_v: Value = [
-        ("Brightness".to_string(), 100.into()),
-        ("Blinking".to_string(), vec![300, 700].into()),
+        ("Brightness".to_owned(), 100.into()),
+        ("Blinking".to_owned(), vec![300, 700].into()),
     ]
     .iter()
     .cloned()
@@ -218,7 +219,7 @@ fn test_error_root_not_table() {
         Err(e) => match e {
             ConfigError::FileParse { cause, .. } => assert_eq!(
                 "invalid type: boolean `false`, expected a map",
-                format!("{}", cause)
+                format!("{cause}")
             ),
             _ => panic!("Wrong error: {:?}", e),
         },

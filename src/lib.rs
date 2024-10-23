@@ -17,8 +17,10 @@
 //!
 //! See the [examples](https://github.com/mehcode/config-rs/tree/master/examples) for
 //! general usage information.
-#![allow(unknown_lints)]
-// #![warn(missing_docs)]
+
+#![cfg_attr(docsrs, feature(doc_auto_cfg))]
+#![warn(clippy::print_stderr)]
+#![warn(clippy::print_stdout)]
 
 pub mod builder;
 mod config;

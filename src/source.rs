@@ -32,8 +32,8 @@ fn set_value(cache: &mut Value, key: &str, value: &Value) {
         // Set using the path
         Ok(expr) => expr.set(cache, value.clone()),
 
-        // Set diretly anyway
-        _ => path::Expression::Identifier(key.to_string()).set(cache, value.clone()),
+        // Set directly anyway
+        _ => path::Expression::Identifier(key.to_owned()).set(cache, value.clone()),
     }
 }
 

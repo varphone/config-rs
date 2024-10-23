@@ -63,14 +63,14 @@ fn test_set_arr_path() {
         .build()
         .unwrap();
 
-    assert_eq!(config.get("items[0].name").ok(), Some("Ivan".to_string()));
+    assert_eq!(config.get("items[0].name").ok(), Some("Ivan".to_owned()));
     assert_eq!(
         config.get("data[0].things[1].name").ok(),
-        Some("foo".to_string())
+        Some("foo".to_owned())
     );
     assert_eq!(config.get("data[0].things[1].value").ok(), Some(42));
     assert_eq!(config.get("data[1]").ok(), Some(0));
-    assert_eq!(config.get("items[2]").ok(), Some("George".to_string()));
+    assert_eq!(config.get("items[2]").ok(), Some("George".to_owned()));
 }
 
 #[cfg(feature = "toml")]

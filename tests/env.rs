@@ -10,7 +10,7 @@ fn test_default() {
         let environment = Environment::default();
 
         assert!(environment.collect().unwrap().contains_key("a_b_c"));
-    })
+    });
 }
 
 #[test]
@@ -19,7 +19,7 @@ fn test_prefix_is_removed_from_key() {
         let environment = Environment::with_prefix("B");
 
         assert!(environment.collect().unwrap().contains_key("a_c"));
-    })
+    });
 }
 
 #[test]
@@ -49,7 +49,7 @@ fn test_separator_behavior() {
         let environment = Environment::with_prefix("C").separator("_");
 
         assert!(environment.collect().unwrap().contains_key("b.a"));
-    })
+    });
 }
 
 #[test]
@@ -58,7 +58,7 @@ fn test_empty_value_is_ignored() {
         let environment = Environment::default().ignore_empty(true);
 
         assert!(!environment.collect().unwrap().contains_key("c_a_b"));
-    })
+    });
 }
 
 #[test]
@@ -77,7 +77,7 @@ fn test_keep_prefix() {
         let environment = Environment::with_prefix("C").keep_prefix(true);
 
         assert!(environment.collect().unwrap().contains_key("c_a_b"));
-    })
+    });
 }
 
 #[test]
@@ -86,7 +86,7 @@ fn test_custom_separator_behavior() {
         let environment = Environment::with_prefix("C").separator(".");
 
         assert!(environment.collect().unwrap().contains_key("b.a"));
-    })
+    });
 }
 
 #[test]
@@ -97,7 +97,7 @@ fn test_custom_prefix_separator_behavior() {
             .prefix_separator("-");
 
         assert!(environment.collect().unwrap().contains_key("b.a"));
-    })
+    });
 }
 
 #[test]
@@ -127,7 +127,7 @@ fn test_parse_int() {
         let config: TestIntEnum = config.try_deserialize().unwrap();
 
         assert!(matches!(config, TestIntEnum::Int(TestInt { int_val: 42 })));
-    })
+    });
 }
 
 #[test]
@@ -160,7 +160,7 @@ fn test_parse_uint() {
             config,
             TestUintEnum::Uint(TestUint { int_val: 42 })
         ));
-    })
+    });
 }
 
 #[test]
@@ -192,10 +192,10 @@ fn test_parse_float() {
         // can't use `matches!` because of float value
         match config {
             TestFloatEnum::Float(TestFloat { float_val }) => {
-                assert!(float_cmp::approx_eq!(f64, float_val, 42.3))
+                assert!(float_cmp::approx_eq!(f64, float_val, 42.3));
             }
         }
-    })
+    });
 }
 
 #[test]
@@ -228,7 +228,7 @@ fn test_parse_bool() {
             config,
             TestBoolEnum::Bool(TestBool { bool_val: true })
         ));
-    })
+    });
 }
 
 #[test]
@@ -238,6 +238,7 @@ fn test_parse_off_int() {
     #[derive(Deserialize, Debug)]
     #[serde(tag = "tag")]
     enum TestIntEnum {
+        #[allow(dead_code)]
         Int(TestInt),
     }
 
@@ -258,7 +259,7 @@ fn test_parse_off_int() {
             .unwrap();
 
         config.try_deserialize::<TestIntEnum>().unwrap();
-    })
+    });
 }
 
 #[test]
@@ -268,6 +269,7 @@ fn test_parse_off_float() {
     #[derive(Deserialize, Debug)]
     #[serde(tag = "tag")]
     enum TestFloatEnum {
+        #[allow(dead_code)]
         Float(TestFloat),
     }
 
@@ -288,7 +290,7 @@ fn test_parse_off_float() {
             .unwrap();
 
         config.try_deserialize::<TestFloatEnum>().unwrap();
-    })
+    });
 }
 
 #[test]
@@ -298,6 +300,7 @@ fn test_parse_off_bool() {
     #[derive(Deserialize, Debug)]
     #[serde(tag = "tag")]
     enum TestBoolEnum {
+        #[allow(dead_code)]
         Bool(TestBool),
     }
 
@@ -318,7 +321,7 @@ fn test_parse_off_bool() {
             .unwrap();
 
         config.try_deserialize::<TestBoolEnum>().unwrap();
-    })
+    });
 }
 
 #[test]
@@ -328,6 +331,7 @@ fn test_parse_int_fail() {
     #[derive(Deserialize, Debug)]
     #[serde(tag = "tag")]
     enum TestIntEnum {
+        #[allow(dead_code)]
         Int(TestInt),
     }
 
@@ -348,7 +352,7 @@ fn test_parse_int_fail() {
             .unwrap();
 
         config.try_deserialize::<TestIntEnum>().unwrap();
-    })
+    });
 }
 
 #[test]
@@ -358,6 +362,7 @@ fn test_parse_float_fail() {
     #[derive(Deserialize, Debug)]
     #[serde(tag = "tag")]
     enum TestFloatEnum {
+        #[allow(dead_code)]
         Float(TestFloat),
     }
 
@@ -378,7 +383,7 @@ fn test_parse_float_fail() {
             .unwrap();
 
         config.try_deserialize::<TestFloatEnum>().unwrap();
-    })
+    });
 }
 
 #[test]
@@ -388,6 +393,7 @@ fn test_parse_bool_fail() {
     #[derive(Deserialize, Debug)]
     #[serde(tag = "tag")]
     enum TestBoolEnum {
+        #[allow(dead_code)]
         Bool(TestBool),
     }
 
@@ -408,7 +414,7 @@ fn test_parse_bool_fail() {
             .unwrap();
 
         config.try_deserialize::<TestBoolEnum>().unwrap();
-    })
+    });
 }
 
 #[test]
@@ -460,7 +466,7 @@ fn test_parse_string_and_list() {
                 }
             }
         },
-    )
+    );
 }
 
 #[test]
@@ -512,10 +518,11 @@ fn test_parse_string_and_list_ignore_list_parse_key_case() {
                 }
             }
         },
-    )
+    );
 }
 
 #[test]
+#[cfg(feature = "convert-case")]
 fn test_parse_nested_kebab() {
     use config::Case;
 
@@ -558,7 +565,7 @@ fn test_parse_nested_kebab() {
 
             let config = Config::builder().add_source(environment).build().unwrap();
 
-            println!("{:#?}", config);
+            println!("{config:#?}");
 
             let config: TestConfig = config.try_deserialize().unwrap();
 
@@ -567,7 +574,7 @@ fn test_parse_nested_kebab() {
             assert_eq!(config.value_with_multipart_name, "value1");
             assert_eq!(config.inner_config.another_multipart_name, "value2");
         },
-    )
+    );
 }
 
 #[test]
@@ -600,10 +607,10 @@ fn test_parse_string() {
 
         match config {
             TestStringEnum::String(TestString { string_val }) => {
-                assert_eq!(test_string, string_val)
+                assert_eq!(test_string, string_val);
             }
         }
-    })
+    });
 }
 
 #[test]
@@ -636,10 +643,10 @@ fn test_parse_string_list() {
 
         match config {
             TestListEnum::StringList(TestList { string_list }) => {
-                assert_eq!(test_string, string_list)
+                assert_eq!(test_string, string_list);
             }
         }
-    })
+    });
 }
 
 #[test]
@@ -675,7 +682,7 @@ fn test_parse_off_string() {
                 assert_eq!(test_string, string_val_1);
             }
         }
-    })
+    });
 }
 
 #[test]

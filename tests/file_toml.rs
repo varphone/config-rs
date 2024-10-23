@@ -50,7 +50,7 @@ fn test_file() {
     let s: Settings = c.try_deserialize().unwrap();
 
     assert!(s.debug.approx_eq_ulps(&1.0, 2));
-    assert_eq!(s.production, Some("false".to_string()));
+    assert_eq!(s.production, Some("false".to_owned()));
     assert_eq!(s.code, AsciiCode(53));
     assert_eq!(s.place.number, PlaceNumber(1));
     assert_eq!(s.place.name, "Torre di Pisa");
@@ -61,15 +61,15 @@ fn test_file() {
     assert_eq!(s.place.rating, Some(4.5));
     assert_eq!(s.place.telephone, None);
     assert_eq!(s.elements.len(), 10);
-    assert_eq!(s.elements[3], "4".to_string());
+    assert_eq!(s.elements[3], "4".to_owned());
     if cfg!(feature = "preserve_order") {
         assert_eq!(
             s.place
                 .creator
                 .into_iter()
-                .collect::<Vec<(String, config::Value)>>(),
+                .collect::<Vec<(String, Value)>>(),
             vec![
-                ("name".to_string(), "John Smith".into()),
+                ("name".to_owned(), "John Smith".into()),
                 ("username".into(), "jsmith".into()),
                 ("email".into(), "jsmith@localhost".into()),
             ]
@@ -77,7 +77,7 @@ fn test_file() {
     } else {
         assert_eq!(
             s.place.creator["name"].clone().into_string().unwrap(),
-            "John Smith".to_string()
+            "John Smith".to_owned()
         );
     }
 }
@@ -129,14 +129,14 @@ fn test_override_uppercase_value_for_struct() {
             assert_ne!(v.FOO, "FOO should be overridden");
             assert_eq!(
                 lower_settings.foo,
-                "I HAVE BEEN OVERRIDDEN_WITH_UPPER_CASE".to_string()
+                "I HAVE BEEN OVERRIDDEN_WITH_UPPER_CASE".to_owned()
             );
         }
         Err(e) => {
             if e.to_string().contains("missing field `FOO`") {
                 assert_eq!(
                     lower_settings.foo,
-                    "I HAVE BEEN OVERRIDDEN_WITH_UPPER_CASE".to_string()
+                    "I HAVE BEEN OVERRIDDEN_WITH_UPPER_CASE".to_owned()
                 );
             } else {
                 panic!("{}", e);
@@ -158,9 +158,9 @@ fn test_override_lowercase_value_for_struct() {
     let values: StructSettings = cfg.try_deserialize().unwrap();
     assert_eq!(
         values.bar,
-        "I have been overridden_with_lower_case".to_string()
+        "I have been overridden_with_lower_case".to_owned()
     );
-    assert_ne!(values.bar, "I am bar".to_string());
+    assert_ne!(values.bar, "I am bar".to_owned());
 }
 
 #[test]
@@ -177,7 +177,7 @@ fn test_override_uppercase_value_for_enums() {
 
     assert_eq!(
         values,
-        EnumSettings::Bar("I HAVE BEEN OVERRIDDEN_WITH_UPPER_CASE".to_string())
+        EnumSettings::Bar("I HAVE BEEN OVERRIDDEN_WITH_UPPER_CASE".to_owned())
     );
 }
 
@@ -195,6 +195,6 @@ fn test_override_lowercase_value_for_enums() {
 
     assert_eq!(
         values,
-        EnumSettings::Bar("I have been overridden_with_lower_case".to_string())
+        EnumSettings::Bar("I have been overridden_with_lower_case".to_owned())
     );
 }

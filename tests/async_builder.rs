@@ -1,3 +1,7 @@
+#![cfg(feature = "async")]
+#![cfg(feature = "json")]
+#![cfg(feature = "toml")]
+
 use async_trait::async_trait;
 use config::{AsyncSource, Config, ConfigError, FileFormat, Format, Map, Value};
 use std::{env, fs, path, str::FromStr};
@@ -11,7 +15,7 @@ struct AsyncFile {
 
 /// This is a test only implementation to be used in tests
 impl AsyncFile {
-    pub fn new(path: String, format: FileFormat) -> Self {
+    pub(crate) fn new(path: String, format: FileFormat) -> Self {
         Self { path, format }
     }
 }
