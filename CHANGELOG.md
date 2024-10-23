@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 <!-- next-header -->
 ## [Unreleased] - ReleaseDate
 
+## [0.14.1] - 2024-10-23
+
 ### Compatibility
 
 - MSRV is now 1.75
@@ -483,4 +485,5 @@ update its MSRV.
 Initial release.
 
 <!-- next-url -->
-[Unreleased]: https://github.com/rust-cli/config-rs/compare/0.14.0...HEAD
+[Unreleased]: https://github.com/rust-ci/config-rs/compare/v0.14.1...HEAD
+[0.14.1]: https://github.com/rust-cli/config-rs/compare/0.14.0...v0.14.1
