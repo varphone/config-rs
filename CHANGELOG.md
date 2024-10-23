@@ -7,6 +7,16 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 <!-- next-header -->
 ## [Unreleased] - ReleaseDate
 
+### Compatibility
+
+- MSRV is now 1.75
+
+### Internal
+
+- Remove dependency on `lazy_static`
+- Update rust-ini from 0.19 to 0.20
+- Switch from yaml-rust to yaml-rust2
+
 ## 0.14.0 - 2024-02-01
 
 This is a maintenance release, mostly to get some dependency updates out, but
