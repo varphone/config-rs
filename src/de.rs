@@ -173,7 +173,7 @@ impl<'de> de::Deserializer<'de> for Value {
 
 struct StrDeserializer<'a>(&'a str);
 
-impl<'de, 'a> de::Deserializer<'de> for StrDeserializer<'a> {
+impl<'de> de::Deserializer<'de> for StrDeserializer<'_> {
     type Error = ConfigError;
 
     #[inline]

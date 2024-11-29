@@ -20,7 +20,7 @@ impl From<Unsigned> for config::ValueKind {
     fn from(unsigned: Unsigned) -> Self {
         let mut properties = std::collections::HashMap::new();
         properties.insert(
-            "unsigned".to_string(),
+            "unsigned".to_owned(),
             config::Value::from(unsigned.unsigned),
         );
 

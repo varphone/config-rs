@@ -271,7 +271,7 @@ impl<'a> SeqSerializer<'a> {
     }
 }
 
-impl<'a> ser::SerializeSeq for SeqSerializer<'a> {
+impl ser::SerializeSeq for SeqSerializer<'_> {
     type Ok = ();
     type Error = ConfigError;
 
@@ -297,7 +297,7 @@ impl<'a> ser::SerializeSeq for SeqSerializer<'a> {
     }
 }
 
-impl<'a> ser::SerializeTuple for SeqSerializer<'a> {
+impl ser::SerializeTuple for SeqSerializer<'_> {
     type Ok = ();
     type Error = ConfigError;
 
@@ -313,7 +313,7 @@ impl<'a> ser::SerializeTuple for SeqSerializer<'a> {
     }
 }
 
-impl<'a> ser::SerializeTupleStruct for SeqSerializer<'a> {
+impl ser::SerializeTupleStruct for SeqSerializer<'_> {
     type Ok = ();
     type Error = ConfigError;
 
@@ -329,7 +329,7 @@ impl<'a> ser::SerializeTupleStruct for SeqSerializer<'a> {
     }
 }
 
-impl<'a> ser::SerializeTupleVariant for SeqSerializer<'a> {
+impl ser::SerializeTupleVariant for SeqSerializer<'_> {
     type Ok = ();
     type Error = ConfigError;
 
@@ -347,7 +347,7 @@ impl<'a> ser::SerializeTupleVariant for SeqSerializer<'a> {
     }
 }
 
-impl<'a> ser::SerializeMap for &'a mut ConfigSerializer {
+impl ser::SerializeMap for &mut ConfigSerializer {
     type Ok = ();
     type Error = ConfigError;
 
@@ -375,7 +375,7 @@ impl<'a> ser::SerializeMap for &'a mut ConfigSerializer {
     }
 }
 
-impl<'a> ser::SerializeStruct for &'a mut ConfigSerializer {
+impl ser::SerializeStruct for &mut ConfigSerializer {
     type Ok = ();
     type Error = ConfigError;
 
@@ -394,7 +394,7 @@ impl<'a> ser::SerializeStruct for &'a mut ConfigSerializer {
     }
 }
 
-impl<'a> ser::SerializeStructVariant for &'a mut ConfigSerializer {
+impl ser::SerializeStructVariant for &mut ConfigSerializer {
     type Ok = ();
     type Error = ConfigError;
 
